@@ -1,0 +1,29 @@
+# Dependencies
+/vendor/
+
+# Upload / user files
+/upload/
+/uploads/
+/public/upload/
+/public/uploads/
+
+# Laravel storage (trừ file cần thiết)
+storage/*.key
+storage/app/public/*
+!storage/app/public/.gitignore
+
+# Environment
+.env
+.env.*
+
+# Logs & cache
+/storage/logs/
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/views/
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

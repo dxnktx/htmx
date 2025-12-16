@@ -1,0 +1,1 @@
+@extends('JangKeyte::layout.app')

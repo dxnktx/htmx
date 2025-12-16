@@ -1,0 +1,17 @@
+<?php
+
+namespace Modules\TripBooking\src\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Post_type extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'image'
+    ];
+
+}
