@@ -11,7 +11,7 @@
     <div class="container mt-5">
         <h2 class="text-center mb-4">{{ __('Đăng ký hành trình') }}</h2>
         @if(!auth()->check())
-        <p class="text-center">{{ __('Nếu bạn là sinh viên nội trú, vui lòng đăng nhập') }} <a href="{{ route('login') }}">{{ __('tại đây') }}</a> </p>
+        <!--<p class="text-center text-bg-success" style="padding: 5px 0;">{{ __('Nếu bạn là sinh viên nội trú, vui lòng sử dụng TÀI KHOẢN SINH VIÊN NỘI TRÚ để đăng nhập và thực hiện ') }} <a class="btn btn-danger" href="{{ route('login') }}">{{ __('ĐĂNG KÝ TẠI ĐÂY') }}</a> </p>-->
         @endif
         @isset($trip->ma_sinh_vien)
         <p class="text-center">{{ __('Bạn đã đăng ký chuyến đi này rồi. Vui lòng xem thông tin chi tiết') }} <a href="{{ route('trip_detail', $trip->ma_sinh_vien) }}">{{ __('tại đây') }}</a></p>
@@ -97,7 +97,7 @@
             // Next button event listeners
             nextBtns.forEach((button) => {
                 button.addEventListener("click", () => {
-                    const currentInputs = steps[currentStep].querySelectorAll("input, select");
+                    const currentInputs = steps[currentStep].querySelectorAll("input, select, textarea");
                     let valid = true;
 
                     // Validate the current inputs

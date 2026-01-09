@@ -68,7 +68,7 @@
         <input type='email' name='email'
             class='form-control @error('email') is-invalid @enderror'
             value='{{ old('email', $user->email) }}'
-            placeholder='ldoe@example.com' required />
+            placeholder='ldoe@example.com' required @auth disabled @endauth/>
         @error('email')
             <div class='invalid-feedback'>{{ $message }}</div>
         @enderror

@@ -2,7 +2,7 @@
     <div class="container my-4">
         <div class="row">
             <div class="text-center">
-                <h2 class="fw-bold text-uppercase">Thời gian đăng ký còn lại dxn</h2>
+                <h2 class="fw-bold text-uppercase">Thời gian đăng ký còn lại</h2>
             </div>
             <div class="countdown">
                 <div id="flipdown" class="flipdown"></div>

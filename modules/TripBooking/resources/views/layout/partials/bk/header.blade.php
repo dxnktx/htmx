@@ -9,6 +9,7 @@
      logged_in_greeting="Xin chào! Tôi có thể hỗ trợ gì cho bạn?"
      logged_out_greeting="Xin chào! Vui lòng đăng nhập Facebook để chat.">
 </div>
+
 <div class="container">
     <header class="border-bottom lh-1 pb-3">
         <div class="row justify-content-between align-items-center">
@@ -101,7 +102,7 @@
         top: 100%;
         left: 0;
         background: #ffffff;
-        min-width: 230px;
+        min-width: 260px;
         display: none;
         list-style: none;
         box-shadow: 0 4px 10px rgba(0,0,0,0.15);

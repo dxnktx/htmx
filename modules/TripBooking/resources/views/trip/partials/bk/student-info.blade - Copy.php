@@ -4,7 +4,7 @@
     <div class='col-sm-10'>
         <input type='text' name='ma_sinh_vien'
             class='form-control @error('ma_sinh_vien') is-invalid @enderror'
-            value='{{ old('ma_sinh_vien', $user->ma_sinh_vien) }}' required @auth readonly @endauth/>
+            value='{{ old('ma_sinh_vien', $student->ma_sinh_vien) }}' required @auth disabled @endauth/>
         @error('ma_sinh_vien')
             <div class='invalid-feedback'>{{ $message }}</div>
         @enderror
