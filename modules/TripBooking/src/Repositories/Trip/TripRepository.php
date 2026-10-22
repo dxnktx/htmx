@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class TripRepository extends BaseRepository implements TripRepositoryInterface
 {
@@ -29,8 +28,7 @@ class TripRepository extends BaseRepository implements TripRepositoryInterface
 
     public function update($request)
     {
-        try {
-            DB::transaction(function () use ($request) {
+        DB::transaction(function () use ($request) {
 
                 $trip = $this->model->where('ma_sinh_vien', $request->ma_sinh_vien)->firstOrNew();
 
@@ -114,14 +112,10 @@ class TripRepository extends BaseRepository implements TripRepositoryInterface
 
                     $user->cccd_mat_sau = $final_name;
                 }
-                $rs1 = $trip->save();
-                $rs2 = $student->save();
-                $rs3 = $user->save();
-            });
-        } catch (\Exception $e) {
-            Log::error('Insert failed', ['exception' => $e->getMessage()]);
-            return redirect()->back()->with('error', __('There is some error in trip step.'));
-        }
+                $trip->save();
+                $student->save();
+                $user->save();
+        });
     }
 
     /**

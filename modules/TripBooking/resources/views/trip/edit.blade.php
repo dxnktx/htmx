@@ -7,7 +7,7 @@
         {{ __('View All') }}</a>
 @endsection
 @section('main_content')
-    @if((strtotime(now()) <= ENV('COUNTDOWN_END')) || auth()->check())
+    @if((strtotime(now()) <= ENV('COUNTDOWN_END')) )
     <div class="container mt-5">
         <h2 class="text-center mb-4">{{ __('Đăng ký hành trình') }}</h2>
         @if(!auth()->check())

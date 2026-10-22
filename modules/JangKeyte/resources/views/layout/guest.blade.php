@@ -6,7 +6,7 @@
 
         <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
 
-        <title>{{ env('APP_NAME') ?? __('System Manager') }}</title>
+        <title>@yield('title', env('APP_NAME') ?? __('System Manager'))</title>
 
         <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
 

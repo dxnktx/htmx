@@ -63,6 +63,7 @@
                     <li><a class="nav-item link-body-emphasis {{ Request::is('trip/create') ? 'active' : '' }}" href="{{ route('trip_create') }}">Dành cho Sinh viên ngoại trú KTX</a></li>
                 </ul>
             </li>
+            <li><a class="nav-item nav-link link-body-emphasis px-2 {{ Request::is('khao-sat*') ? 'active' : '' }}" href="{{ route('survey.create') }}">Khảo sát Tết</a></li>
             <li><a class="nav-item nav-link link-body-emphasis px-2 {{ Request::is('lien-he') ? 'active' : '' }}" href="{{ route('contact') }}">{{ __('Contact Us') }}</a></li>
         </ul>
     </nav>

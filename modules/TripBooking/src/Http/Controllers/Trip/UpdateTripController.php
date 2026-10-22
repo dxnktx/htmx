@@ -3,6 +3,7 @@
 namespace Modules\TripBooking\src\Http\Controllers\Trip;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Mail;
 use Modules\TripBooking\src\Mail\Websitemail;
 use Modules\TripBooking\src\Http\Requests\Trip\UpdateTripRequest;
@@ -63,7 +64,15 @@ class UpdateTripController extends Controller
 
     public function store(UpdateTripRequest $request)
     {
-        $this->tripRepository->update($request);
+        try {
+            $this->tripRepository->update($request);
+        } catch (QueryException $exception) {
+            report($exception);
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', __('Hệ thống đang bận, dữ liệu chưa được lưu. Vui lòng thử gửi lại sau ít phút.'));
+        }
 
         $subject = __('Thông báo đăng ký hành trình mùa xuân thành công.');
         $message = __('Cảm ơn bạn đã đăng ký chuyến đi hành trình mùa xuân. Mã đăng ký của bạn là: <a href="https://htmx.ktxhcm.edu.vn/trip/detail/' . $request->ma_sinh_vien . '" title="' . $request->ma_sinh_vien . '">' . $request->ma_sinh_vien . '</a>. Thông tin đăng ký của bạn:') . '<br>';

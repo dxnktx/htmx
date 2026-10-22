@@ -4,6 +4,15 @@
     </a>
 </li>
 
+@can('browse-dashboard')
+    <li class="nav-item {{ Request::is('admin/khao-sat*') ? 'menu-open' : '' }}">
+        <a href="{{ route('admin.surveys.index') }}" class="nav-link {{ Request::is('admin/khao-sat*') ? 'active' : '' }}">
+            <i class="nav-icon bi bi-clipboard-data"></i>
+            <p>Khảo sát Tết</p>
+        </a>
+    </li>
+@endcan
+
 @include('TripBooking::layout.partials.menu')
 {{-- @stack('menus') --}}
 

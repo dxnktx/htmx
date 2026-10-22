@@ -16,20 +16,27 @@
   //]]>
 </script>
 <script>
-    //<![CDATA[
-    var lastScroll = 0;
-    jQuery(document).ready(function($) {
-      $(window).scroll(function() {
-        var scroll = $(window).scrollTop();
-        if (scroll > lastScroll) {
-          $('#right-2020').removeClass('left-2025').addClass('text-2025-l')
-          $('#left-2020').removeClass('right-2025').addClass('text-2025-r')
-        } else if (scroll < lastScroll) {
-          $('#right-2020').addClass('left-2025').removeClass('text-2025-l')
-          $('#left-2020').addClass('right-2025').removeClass('text-2025-r')
-        }
-        lastScroll = scroll;
-      })
-    })
-    //]]>
+    document.addEventListener('DOMContentLoaded', function () {
+        let lastScroll = 0;
+        const rightDecoration = document.getElementById('right-2020');
+        const leftDecoration = document.getElementById('left-2020');
+
+        window.addEventListener('scroll', function () {
+            const scroll = window.scrollY;
+
+            if (scroll > lastScroll) {
+                rightDecoration?.classList.remove('left-2025');
+                rightDecoration?.classList.add('text-2025-l');
+                leftDecoration?.classList.remove('right-2025');
+                leftDecoration?.classList.add('text-2025-r');
+            } else if (scroll < lastScroll) {
+                rightDecoration?.classList.add('left-2025');
+                rightDecoration?.classList.remove('text-2025-l');
+                leftDecoration?.classList.add('right-2025');
+                leftDecoration?.classList.remove('text-2025-r');
+            }
+
+            lastScroll = scroll;
+        });
+    });
 </script>
