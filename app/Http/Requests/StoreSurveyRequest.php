@@ -20,8 +20,8 @@ class StoreSurveyRequest extends FormRequest
     {
         return [
             'full_name' => ['required', 'string', 'max:255'],
-            'training_unit' => ['required', 'string', Rule::in(array_keys(Survey::trainingUnits()))],
-            'training_unit_other' => ['nullable', 'required_if:training_unit,'.Survey::OTHER, 'string', 'max:255'],
+            'unit_id' => ['nullable', 'integer', 'exists:units,id'],
+            'university_other' => ['nullable', 'required_without:unit_id', 'string', 'max:255'],
             'student_year' => ['required', 'string', Rule::in(array_keys(Survey::studentYears()))],
             'current_residence' => ['required', 'string', 'max:255'],
             'family_situation' => ['required', 'string', Rule::in(array_keys(Survey::familySituations()))],
@@ -39,8 +39,8 @@ class StoreSurveyRequest extends FormRequest
     {
         return [
             'full_name' => 'họ và tên',
-            'training_unit' => 'đơn vị đào tạo',
-            'training_unit_other' => 'đơn vị đào tạo khác',
+            'unit_id' => 'đơn vị đào tạo',
+            'university_other' => 'đơn vị đào tạo khác',
             'student_year' => 'sinh viên năm thứ mấy',
             'current_residence' => 'chỗ ở hiện tại',
             'family_situation' => 'hoàn cảnh gia đình',
@@ -59,6 +59,7 @@ class StoreSurveyRequest extends FormRequest
         return [
             'required' => 'Vui lòng nhập :attribute.',
             'required_if' => 'Vui lòng ghi rõ :attribute khi chọn "Khác".',
+            'required_without' => 'Vui lòng nhập :attribute khi chưa chọn đơn vị đào tạo.',
             'in' => ':attribute không hợp lệ.',
             'max' => ':attribute không được vượt quá :max ký tự.',
         ];

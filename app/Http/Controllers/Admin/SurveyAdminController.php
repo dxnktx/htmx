@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\SurveysExport;
 use App\Http\Controllers\Controller;
 use App\Models\Survey;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -13,7 +14,7 @@ class SurveyAdminController extends Controller
 {
     public function index(Request $request)
     {
-        $surveys = Survey::query()
+        $surveys = Survey::with('unit')
             ->filter($request)
             ->latest()
             ->paginate(15)
@@ -21,9 +22,9 @@ class SurveyAdminController extends Controller
 
         return view('admin.surveys.index', [
             'surveys' => $surveys,
-            'trainingUnits' => Survey::trainingUnits(),
+            'units' => Unit::query()->select('id', 'ten_don_vi')->get(),
             'provinces' => Survey::provinces(),
-            'filters' => $request->only(['training_unit', 'destination_province', 'q']),
+            'filters' => $request->only(['unit_id', 'destination_province', 'q']),
         ]);
     }
 

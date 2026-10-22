@@ -21,7 +21,7 @@
 
 @section('main_content')
     <main class="min-h-screen bg-gradient-to-b from-orange-50 via-red-50 to-amber-50 text-slate-800 antialiased">
-        <div class="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
+        <div class="mx-auto max-w-4xl px-4 py-4 sm:px-6 sm:py-12">
             @yield('content')
         </div>
     </main>

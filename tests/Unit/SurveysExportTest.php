@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Exports\SurveysExport;
 use App\Models\Survey;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Tests\TestCase;
@@ -15,7 +16,7 @@ class SurveysExportTest extends TestCase
         $export = new SurveysExport(Request::create('/'));
         $survey = new Survey([
             'full_name' => 'Nguyen Van A',
-            'training_unit' => 'bach_khoa',
+            'university_other' => 'Trường Đại học thử nghiệm',
             'student_year' => 'year_1',
             'current_residence' => 'KTX Khu A',
             'family_situation' => 'poor',
@@ -41,6 +42,7 @@ class SurveysExportTest extends TestCase
             'Ngày gửi',
         ], $export->headings());
         $this->assertSame(1, $firstRow[0]);
+        $this->assertSame('Trường Đại học thử nghiệm', $firstRow[2]);
         $this->assertSame('Lâm Đồng (Bình Thuận, Đăk Nông cũ)', $firstRow[6]);
         $this->assertSame('01/01/2026 10:30', $firstRow[9]);
         $this->assertSame(2, $secondRow[0]);
@@ -68,16 +70,28 @@ class SurveysExportTest extends TestCase
         ], $export->styles(new Worksheet()));
     }
 
+    public function test_a_selected_unit_takes_precedence_over_the_other_university_name(): void
+    {
+        $survey = new Survey([
+            'university_other' => 'Trường do người dùng nhập',
+        ]);
+        $unit = new Unit();
+        $unit->setAttribute('ten_don_vi', 'Đơn vị trong danh sách');
+        $survey->setRelation('unit', $unit);
+
+        $this->assertSame('Đơn vị trong danh sách', $survey->display_university);
+    }
+
     public function test_it_applies_the_admin_filters_to_the_export_query(): void
     {
         $export = new SurveysExport(Request::create('/', 'GET', [
-            'training_unit' => 'bach_khoa',
+            'unit_id' => '7',
             'destination_province' => 'lam_dong',
             'q' => '  Nguyen Van A  ',
         ]));
 
         $this->assertSame([
-            'bach_khoa',
+            7,
             'lam_dong',
             '%Nguyen Van A%',
         ], $export->query()->getBindings());

@@ -9,14 +9,14 @@ use Tests\TestCase;
 
 class StoreSurveyRequestTest extends TestCase
 {
-    public function test_training_unit_other_is_required_when_other_training_unit_is_selected(): void
+    public function test_university_other_is_required_when_no_unit_is_selected(): void
     {
         $validator = Validator::make($this->validSurveyData([
-            'training_unit' => Survey::OTHER,
+            'university_other' => null,
         ]), (new StoreSurveyRequest)->rules());
 
         $this->assertTrue($validator->fails());
-        $this->assertArrayHasKey('training_unit_other', $validator->errors()->toArray());
+        $this->assertArrayHasKey('university_other', $validator->errors()->toArray());
     }
 
     public function test_family_situation_other_is_required_when_other_family_situation_is_selected(): void
@@ -30,14 +30,15 @@ class StoreSurveyRequestTest extends TestCase
     }
 
     /**
-     * @param  array<string, string>  $overrides
-     * @return array<string, string>
+     * @param  array<string, mixed>  $overrides
+     * @return array<string, mixed>
      */
     private function validSurveyData(array $overrides = []): array
     {
         return array_merge([
             'full_name' => 'Nguyen Van A',
-            'training_unit' => 'bach_khoa',
+            'unit_id' => null,
+            'university_other' => 'Trường đại học khác',
             'student_year' => 'year_1',
             'current_residence' => 'KTX Khu A',
             'family_situation' => 'poor',

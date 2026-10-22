@@ -17,6 +17,8 @@ class Survey extends Model
     protected $fillable = [
         'user_id',
         'full_name',
+        'unit_id',
+        'university_other',
         'training_unit',
         'training_unit_other',
         'student_year',
@@ -124,6 +126,16 @@ class Survey extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function unit(): BelongsTo
+    {
+        return $this->belongsTo(Unit::class);
+    }
+
+    public function getDisplayUniversityAttribute(): ?string
+    {
+        return $this->unit?->name ?? $this->university_other;
+    }
+
     public function getTrainingUnitLabelAttribute(): string
     {
         return $this->formatChoice(
@@ -166,8 +178,8 @@ class Survey extends Model
     {
         return $query
             ->when(
-                $request->filled('training_unit'),
-                fn (Builder $builder) => $builder->where('training_unit', $request->string('training_unit')->toString())
+                $request->filled('unit_id'),
+                fn (Builder $builder) => $builder->where('unit_id', $request->integer('unit_id'))
             )
             ->when(
                 $request->filled('destination_province'),

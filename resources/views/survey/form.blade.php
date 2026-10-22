@@ -3,13 +3,14 @@
 @section('title', 'Khảo sát nhu cầu về quê ăn Tết')
 
 @section('content')
-    <header class="mb-6 text-center">
-        <p class="text-sm font-semibold uppercase tracking-wide text-red-700">Chương trình Hành trình mùa Xuân</p>
-        <h1 class="mt-2 text-2xl font-bold text-red-800 sm:text-3xl">Khảo sát nhu cầu về quê ăn Tết</h1>
-        <p class="mt-3 text-sm text-slate-600 sm:text-base">
-            Vui lòng điền đầy đủ thông tin để Ban Tổ chức nắm nhu cầu hỗ trợ sinh viên về quê dịp Tết.
-        </p>
-    </header>
+<header class="mb-6 text-center">
+    <!--<p class="text-sm font-semibold uppercase tracking-wide text-red-700">Chương trình Hành trình mùa Xuân</p>-->
+    <h1 class="mt-2 text-2xl font-bold text-red-800 sm:text-3xl" style="line-height: 1.4;">Khảo sát nhu cầu đăng ký <br/> Chuyến xe "HÀNH TRÌNH MÙA XUÂN"</h1>
+</header>
+<ul class="text-justify">Chương trình Hành trình mùa xuân năm 2026 với ý nghĩa nhằm kịp thời quan tâm, chăm lo, hỗ trợ cho sinh viên có hoàn cảnh khó khăn trong dịp Tết Nguyên đán Bính Ngọ năm 2026. Ban Cán sự Đoàn ĐHQG-HCM và Trung tâm Quản lý Ký túc xá và Khu đô thị ĐHQG-HCM khảo sát sinh viên có nhu cầu, cụ thể như sau:
+    <li><span class="font-bold">- Thời gian khảo sát:</span> 22/11 – 30/11/2025.</li>
+    <li><span class="font-bold">- Đối tượng:</span> Sinh viên nội trú Ký túc xá ĐHQG-HCM và sinh viên đang học tập tại các cơ sở đào tạo thuộc ĐHQG-HCM.</li>
+</ul>
 
     @if ($errors->any())
         <div class="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -22,9 +23,12 @@
         </div>
     @endif
 
-    <form action="{{ route('survey.store') }}" method="POST" class="space-y-6 rounded-2xl bg-white p-5 shadow-lg shadow-red-100 ring-1 ring-red-100 sm:p-8">
+    <form action="{{ route('survey.store') }}" method="POST" class="space-y-6 rounded-2xl bg-white p-5 py-4 shadow-lg shadow-red-100 ring-1 ring-red-100 sm:p-8">
         @csrf
 
+        <h2 class="mt-3 text-base text-center font-bold text-red-800 sm:text-2xl">
+            THÔNG TIN KHẢO SÁT
+        </h2>
         <div>
             <label for="full_name" class="mb-2 block text-sm font-semibold text-slate-800">
                 Họ và tên <span class="text-red-600">*</span>
@@ -43,44 +47,43 @@
             @enderror
         </div>
 
-        <fieldset>
-            <legend class="mb-3 text-sm font-semibold text-slate-800">
+        <div>
+            <label for="unit_id" class="mb-2 block text-sm font-semibold text-slate-800">
                 Đơn vị đào tạo <span class="text-red-600">*</span>
-            </legend>
-            <div class="space-y-2">
-                @foreach ($trainingUnits as $value => $label)
-                    <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 px-3 py-2.5 has-[:checked]:border-red-400 has-[:checked]:bg-red-50">
-                        <input
-                            type="radio"
-                            name="training_unit"
-                            value="{{ $value }}"
-                            class="mt-1 h-4 w-4 accent-red-600"
-                            {{ old('training_unit') === $value ? 'checked' : '' }}
-                            required
-                            data-toggle-other="training_unit_other_wrap"
-                        >
-                        <span class="text-sm sm:text-base">{{ $label }}</span>
-                    </label>
+            </label>
+            <select
+                id="unit_id"
+                name="unit_id"
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500"
+            >
+                <option value="">Chọn đơn vị đào tạo</option>
+                @foreach ($units as $unit)
+                    <option value="{{ $unit->id }}" @selected((string) old('unit_id') === (string) $unit->id)>
+                        {{ $unit->name }}
+                    </option>
                 @endforeach
-            </div>
-            <div id="training_unit_other_wrap" class="mt-3 {{ old('training_unit') === $otherValue ? '' : 'hidden' }}">
-                <label for="training_unit_other" class="mb-2 block text-sm font-medium text-slate-700">Ghi rõ đơn vị đào tạo</label>
+            </select>
+            <!--<div id="university_other_wrap" class="mt-3 {{ old('unit_id') ? 'hidden' : '' }}">
+                <label for="university_other" class="mb-2 block text-sm font-medium text-slate-700">
+                    Nếu không có trong danh sách, vui lòng ghi rõ đơn vị đào tạo
+                </label>
                 <input
                     type="text"
-                    id="training_unit_other"
-                    name="training_unit_other"
-                    value="{{ old('training_unit_other') }}"
+                    id="university_other"
+                    name="university_other"
+                    value="{{ old('university_other') }}"
+                    @required(!old('unit_id'))
                     class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500"
                     placeholder="Nhập tên đơn vị đào tạo"
                 >
-            </div>
-            @error('training_unit')
+            </div>-->
+            @error('unit_id')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
             @enderror
-            @error('training_unit_other')
+            @error('university_other')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
             @enderror
-        </fieldset>
+        </div>
 
         <fieldset>
             <legend class="mb-3 text-sm font-semibold text-slate-800">
@@ -233,6 +236,12 @@
             @enderror
         </fieldset>
 
+        <fieldset>
+            <div class="space-y-2">
+                <label class="flex cursor-pointer items-start gap-3 rounded-xlpx-3 py-2.5 has-[:checked]:border-red-400 has-[:checked]:bg-red-50"><span class="text-sm sm:text-base">Cảm ơn bạn đã thực hiện khảo sát. Thông tin về chương trình Hành trình mùa xuân sẽ sớm được công bố trên các kênh truyền thông của Trung tâm Quản lý Ký túc xá và Khu Đô thị ĐHQG-HCM và Tuổi trẻ ĐHQG-HCM.</span>
+                </label></div>
+        </fieldset>
+
         <button
             type="submit"
             class="w-full rounded-xl bg-red-700 px-4 py-3 text-base font-semibold text-white shadow hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
@@ -246,6 +255,25 @@
 <script>
     (function () {
         const otherValue = @json($otherValue);
+
+        function bindUniversityOtherToggle() {
+            const select = document.getElementById('unit_id');
+            const wrap = document.getElementById('university_other_wrap');
+            const input = document.getElementById('university_other');
+
+            if (!select || !wrap || !input) {
+                return;
+            }
+
+            function sync() {
+                const isOther = !select.value;
+                wrap.classList.toggle('hidden', !isOther);
+                input.required = isOther;
+            }
+
+            select.addEventListener('change', sync);
+            sync();
+        }
 
         function bindOtherToggle(groupName, wrapId) {
             const wrap = document.getElementById(wrapId);
@@ -272,7 +300,7 @@
             sync();
         }
 
-        bindOtherToggle('training_unit', 'training_unit_other_wrap');
+        bindUniversityOtherToggle();
         bindOtherToggle('family_situation', 'family_situation_other_wrap');
     })();
 </script>

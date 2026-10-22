@@ -23,7 +23,7 @@ class SurveysExport implements FromQuery, ShouldAutoSize, WithHeadings, WithMapp
 
     public function query()
     {
-        return Survey::query()
+        return Survey::with('unit')
             ->filter($this->request)
             ->latest();
     }
@@ -56,7 +56,7 @@ class SurveysExport implements FromQuery, ShouldAutoSize, WithHeadings, WithMapp
         return [
             ++$this->rowNumber,
             $survey->full_name,
-            $survey->training_unit_label,
+            $survey->display_university,
             $survey->student_year_label,
             $survey->current_residence,
             $survey->family_situation_label,

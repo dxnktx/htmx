@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSurveyRequest;
 use App\Models\Survey;
+use App\Models\Unit;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -12,7 +13,7 @@ class SurveyController extends Controller
     public function create(): View
     {
         return view('survey.form', [
-            'trainingUnits' => Survey::trainingUnits(),
+            'units' => Unit::query()->select('id', 'ten_don_vi')->get(),
             'studentYears' => Survey::studentYears(),
             'familySituations' => Survey::familySituations(),
             'provinces' => Survey::provinces(),
@@ -26,9 +27,12 @@ class SurveyController extends Controller
     {
         $data = $request->validated();
 
-        if ($data['training_unit'] !== Survey::OTHER) {
-            $data['training_unit_other'] = null;
+        if (!empty($data['unit_id'])) {
+            $data['university_other'] = null;
         }
+
+        $data['training_unit'] = null;
+        $data['training_unit_other'] = null;
 
         if ($data['family_situation'] !== Survey::OTHER) {
             $data['family_situation_other'] = null;

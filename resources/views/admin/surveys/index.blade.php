@@ -20,11 +20,13 @@
                 <input type="search" id="q" name="q" value="{{ $filters['q'] ?? '' }}" class="form-control" placeholder="Tìm theo họ và tên">
             </div>
             <div class="col-12 col-md-3">
-                <label for="training_unit" class="form-label">Đơn vị đào tạo</label>
-                <select id="training_unit" name="training_unit" class="form-select">
+                <label for="unit_id" class="form-label">Đơn vị đào tạo</label>
+                <select id="unit_id" name="unit_id" class="form-select">
                     <option value="">Tất cả</option>
-                    @foreach ($trainingUnits as $value => $label)
-                        <option value="{{ $value }}" @selected(($filters['training_unit'] ?? '') === $value)>{{ $label }}</option>
+                    @foreach ($units as $unit)
+                        <option value="{{ $unit->id }}" @selected((string) ($filters['unit_id'] ?? '') === (string) $unit->id)>
+                            {{ $unit->name }}
+                        </option>
                     @endforeach
                 </select>
             </div>
@@ -71,7 +73,7 @@
                         <tr>
                             <td>{{ $surveys->firstItem() + $loop->index }}</td>
                             <td>{{ $item->full_name }}</td>
-                            <td>{{ $item->training_unit_label }}</td>
+                            <td>{{ $item->display_university }}</td>
                             <td>{{ $item->student_year_label }}</td>
                             <td>{{ $item->current_residence }}</td>
                             <td>{{ $item->family_situation_label }}</td>
