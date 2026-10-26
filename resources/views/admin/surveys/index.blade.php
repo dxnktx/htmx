@@ -92,14 +92,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-6">
+                    <!--<div class="col-12 col-lg-6">
                         <div class="border rounded p-3 h-100">
                             <h6 class="mb-3">Tỷ lệ theo hình thức hỗ trợ</h6>
                             <div style="height: 300px; position: relative;">
                                 <canvas id="survey-support-types-chart" aria-label="Biểu đồ hình thức hỗ trợ" role="img"></canvas>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="col-12 col-lg-6">
                         <div class="border rounded p-3 h-100">
                             <h6 class="mb-3">Phân bố theo khung thời gian khởi hành</h6>
@@ -221,7 +221,7 @@
         function initializeCharts() {
             createChart('survey-universities-chart', chartData.universities, 'doughnut', false);
             createChart('survey-provinces-chart', chartData.provinces, 'bar', false);
-            createChart('survey-support-types-chart', chartData.supportTypes, 'doughnut', false);
+            //createChart('survey-support-types-chart', chartData.supportTypes, 'doughnut', false);
             createChart('survey-departure-times-chart', chartData.departureTimes, 'bar', true);
         }
 

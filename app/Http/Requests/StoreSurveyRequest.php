@@ -8,6 +8,8 @@ use Illuminate\Validation\Rule;
 
 class StoreSurveyRequest extends FormRequest
 {
+    protected $redirectRoute = 'survey.create';
+
     public function authorize(): bool
     {
         return true;

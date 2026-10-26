@@ -7,24 +7,23 @@
     <!--<p class="text-sm font-semibold uppercase tracking-wide text-red-700">Chương trình Hành trình mùa Xuân</p>-->
     <h1 class="mt-2 text-2xl font-bold text-red-800 sm:text-3xl" style="line-height: 1.4;">Khảo sát nhu cầu đăng ký <br/> Chuyến xe "HÀNH TRÌNH MÙA XUÂN"</h1>
 </header>
-<ul class="text-justify">Chương trình Hành trình mùa xuân năm 2026 với ý nghĩa nhằm kịp thời quan tâm, chăm lo, hỗ trợ cho sinh viên có hoàn cảnh khó khăn trong dịp Tết Nguyên đán Bính Ngọ năm 2026. Ban Cán sự Đoàn ĐHQG-HCM và Trung tâm Quản lý Ký túc xá và Khu đô thị ĐHQG-HCM khảo sát sinh viên có nhu cầu, cụ thể như sau:
-    <li><span class="font-bold">- Thời gian khảo sát:</span> 22/11 – 30/11/2025.</li>
+<ul class="text-justify">Chương trình Hành trình mùa xuân năm 2027 với ý nghĩa nhằm kịp thời quan tâm, chăm lo, hỗ trợ cho sinh viên có hoàn cảnh khó khăn trong dịp Tết Nguyên đán Bính Ngọ năm 2027. Ban Cán sự Đoàn ĐHQG-HCM và Trung tâm Quản lý Ký túc xá và Khu đô thị ĐHQG-HCM khảo sát sinh viên có nhu cầu, cụ thể như sau:
+    <li><span class="font-bold">- Thời gian khảo sát:</span> 27/10 – 05/11/2026.</li>
     <li><span class="font-bold">- Đối tượng:</span> Sinh viên nội trú Ký túc xá ĐHQG-HCM và sinh viên đang học tập tại các cơ sở đào tạo thuộc ĐHQG-HCM.</li>
 </ul>
 
-    @if ($errors->any())
-        <div class="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            <p class="font-semibold">Vui lòng kiểm tra lại các thông tin bắt buộc.</p>
-            <ul class="mt-2 list-disc space-y-1 pl-5">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <form action="{{ route('survey.store') }}" method="POST" class="space-y-6 rounded-2xl bg-white p-5 py-4 shadow-lg shadow-red-100 ring-1 ring-red-100 sm:p-8">
         @csrf
+
+        @if ($errors->any())
+            <div role="alert" aria-live="assertive" class="alert alert-danger mb-4 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700">
+                <ul class="list-disc pl-5 space-y-1">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <h2 class="mt-3 text-base text-center font-bold text-red-800 sm:text-2xl">
             THÔNG TIN KHẢO SÁT
@@ -58,11 +57,13 @@
                 value="{{ old('email') }}"
                 required
                 maxlength="255"
-                class="w-full rounded-xl border border-slate-300 px-4 py-3 text-base outline-none ring-red-500 focus:border-red-500 focus:ring-2"
+                aria-invalid="{{ $errors->has('email') ? 'true' : 'false' }}"
+                @error('email') aria-describedby="email-error" @enderror
+                class="w-full rounded-xl border {{ $errors->has('email') ? 'border-red-500' : 'border-slate-300' }} px-4 py-3 text-base outline-none ring-red-500 focus:border-red-500 focus:ring-2"
                 placeholder="email@example.com"
             >
             @error('email')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                <p id="email-error" role="alert" class="mt-1 font-semibold text-sm text-red-600">{{ $message }}</p>
             @enderror
         </div>
 
@@ -238,7 +239,7 @@
                     value="{{ old('departure_time_other') }}"
                     class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500"
                 >
-                
+
             </div>
             @error('departure_time_range')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

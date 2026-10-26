@@ -26,6 +26,11 @@ class SurveyController extends Controller
     public function store(StoreSurveyRequest $request): RedirectResponse
     {
         $data = $request->validated();
+
+        if (Survey::where('email', $data['email'])->exists()) {
+            return redirect()->route('survey.already-submitted');
+        }
+
         $departureTime = $data['departure_time_range'];
         unset($data['departure_time_range']);
         $data['departure_time'] = $departureTime;
@@ -64,5 +69,10 @@ class SurveyController extends Controller
     public function success(): View
     {
         return view('survey.success');
+    }
+
+    public function alreadySubmitted(): View
+    {
+        return view('survey.already-submitted');
     }
 }
