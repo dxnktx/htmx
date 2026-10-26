@@ -11,12 +11,15 @@ class Survey extends Model
 {
     public const OTHER = 'other';
 
+    public const DEPARTURE_TIME_OTHER = 'Khác';
+
     /**
      * @var list<string>
      */
     protected $fillable = [
         'user_id',
         'full_name',
+        'email',
         'unit_id',
         'university_other',
         'training_unit',
@@ -27,9 +30,19 @@ class Survey extends Model
         'family_situation_other',
         'destination_province',
         'departure_time',
+        'departure_time_other',
         'support_type',
+        'student_note',
+        'is_agreed',
         'ip_address',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'is_agreed' => 'boolean',
+        ];
+    }
 
     /**
      * @return array<string, string>
@@ -83,19 +96,40 @@ class Survey extends Model
     public static function provinces(): array
     {
         return [
-            'lam_dong' => 'Lâm Đồng (Bình Thuận, Đăk Nông cũ)',
-            'khanh_hoa' => 'Khánh Hoà (Ninh Thuận, Khánh Hoà cũ)',
-            'dak_lak' => 'Đăk Lăk (Phú Yên, Đăk Lăk cũ)',
-            'gia_lai' => 'Gia Lai (Bình Định, Gia Lai cũ)',
-            'quang_ngai' => 'Quảng Ngãi (KonTum, Quảng Ngãi cũ)',
-            'da_nang' => 'Đà Nẵng (Quảng Nam, Đà Nẵng cũ)',
-            'hue' => 'Huế',
-            'quang_tri' => 'Quảng Trị (Quảng Bình, Quảng Trị cũ)',
-            'ha_tinh' => 'Hà Tĩnh',
-            'nghe_an' => 'Nghệ An',
-            'thanh_hoa' => 'Thanh Hoá',
-            'ninh_binh' => 'Ninh Bình (Hà Nam, Ninh Bình cũ)',
+            'an_giang' => 'An Giang',
+            'bac_ninh' => 'Bắc Ninh',
+            'ca_mau' => 'Cà Mau',
+            'cao_bang' => 'Cao Bằng',
+            'can_tho' => 'Cần Thơ',
+            'dak_lak' => 'Đắk Lắk',
+            'dien_bien' => 'Điện Biên',
+            'dong_nai' => 'Đồng Nai',
+            'dong_thap' => 'Đồng Tháp',
+            'da_nang' => 'Đà Nẵng',
+            'gia_lai' => 'Gia Lai',
             'ha_noi' => 'Hà Nội',
+            'ha_tinh' => 'Hà Tĩnh',
+            'hai_phong' => 'Hải Phòng',
+            'hue' => 'Huế',
+            'hung_yen' => 'Hưng Yên',
+            'khanh_hoa' => 'Khánh Hòa',
+            'lai_chau' => 'Lai Châu',
+            'lang_son' => 'Lạng Sơn',
+            'lao_cai' => 'Lào Cai',
+            'lam_dong' => 'Lâm Đồng',
+            'nghe_an' => 'Nghệ An',
+            'ninh_binh' => 'Ninh Bình',
+            'phu_tho' => 'Phú Thọ',
+            'quang_ngai' => 'Quảng Ngãi',
+            'quang_ninh' => 'Quảng Ninh',
+            'quang_tri' => 'Quảng Trị',
+            'son_la' => 'Sơn La',
+            'tay_ninh' => 'Tây Ninh',
+            'thai_nguyen' => 'Thái Nguyên',
+            'thanh_hoa' => 'Thanh Hoá',
+            'ho_chi_minh' => 'Thành phố Hồ Chí Minh',
+            'tuyen_quang' => 'Tuyên Quang',
+            'vinh_long' => 'Vĩnh Long',
         ];
     }
 
@@ -107,6 +141,7 @@ class Survey extends Model
         return [
             '2026-01-12_15' => '12/01 – 15/01/2026',
             '2026-01-16_21' => '16/01 – 21/01/2026',
+            self::DEPARTURE_TIME_OTHER => self::DEPARTURE_TIME_OTHER,
         ];
     }
 
@@ -166,6 +201,12 @@ class Survey extends Model
 
     public function getDepartureTimeLabelAttribute(): string
     {
+        if ($this->departure_time === self::DEPARTURE_TIME_OTHER) {
+            return trim((string) $this->departure_time_other) !== ''
+                ? self::DEPARTURE_TIME_OTHER.': '.$this->departure_time_other
+                : self::DEPARTURE_TIME_OTHER;
+        }
+
         return self::departureTimes()[$this->departure_time] ?? $this->departure_time;
     }
 

@@ -36,13 +36,17 @@ class SurveysExport implements FromQuery, ShouldAutoSize, WithHeadings, WithMapp
         return [
             'STT',
             'Họ và tên',
+            'Email',
             'Đơn vị đào tạo',
             'Sinh viên năm',
             'Chỗ ở hiện tại',
             'Hoàn cảnh gia đình',
             'Tỉnh về quê',
             'Thời gian khởi hành',
+            'Thời gian khởi hành (Khác)',
             'Hình thức hỗ trợ',
+            'Mong muốn của sinh viên',
+            'Đồng ý cung cấp thông tin',
             'Ngày gửi',
         ];
     }
@@ -56,13 +60,17 @@ class SurveysExport implements FromQuery, ShouldAutoSize, WithHeadings, WithMapp
         return [
             ++$this->rowNumber,
             $survey->full_name,
+            $survey->email,
             $survey->display_university,
             $survey->student_year_label,
             $survey->current_residence,
             $survey->family_situation_label,
             $survey->destination_province_label,
             $survey->departure_time_label,
+            $survey->departure_time_other,
             $survey->support_type_label,
+            $survey->student_note,
+            $survey->is_agreed ? 'Có' : 'Không',
             optional($survey->created_at)->format('d/m/Y H:i'),
         ];
     }

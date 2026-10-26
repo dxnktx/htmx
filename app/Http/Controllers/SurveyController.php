@@ -26,6 +26,21 @@ class SurveyController extends Controller
     public function store(StoreSurveyRequest $request): RedirectResponse
     {
         $data = $request->validated();
+        $departureTime = $data['departure_time_range'];
+        unset($data['departure_time_range']);
+        $data['departure_time'] = $departureTime;
+
+        if ($departureTime !== Survey::DEPARTURE_TIME_OTHER) {
+            $data['departure_time_other'] = null;
+        } else {
+            $data['departure_time_other'] = \Illuminate\Support\Carbon::createFromFormat(
+                '!Y-m-d',
+                $data['departure_time_other']
+            )->format('d/m/Y');
+        }
+
+        $data['support_type'] ??= array_key_first(Survey::supportTypes());
+        $data['is_agreed'] = true;
 
         if (!empty($data['unit_id'])) {
             $data['university_other'] = null;

@@ -125,6 +125,7 @@
                     <tr>
                         <th>#</th>
                         <th>Họ và tên</th>
+                        <th>Email</th>
                         <th>Đơn vị đào tạo</th>
                         <th>Năm</th>
                         <th>Chỗ ở</th>
@@ -132,6 +133,8 @@
                         <th>Tỉnh thành</th>
                         <th>Khởi hành</th>
                         <th>Hỗ trợ</th>
+                        <th>Ghi chú của sinh viên</th>
+                        <th>Trạng thái đồng ý</th>
                         <th>Thời gian gửi</th>
                     </tr>
                 </thead>
@@ -140,6 +143,7 @@
                         <tr>
                             <td>{{ $surveys->firstItem() + $loop->index }}</td>
                             <td>{{ $item->full_name }}</td>
+                            <td>{{ $item->email }}</td>
                             <td>{{ $item->display_university }}</td>
                             <td>{{ $item->student_year_label }}</td>
                             <td>{{ $item->current_residence }}</td>
@@ -147,11 +151,13 @@
                             <td>{{ $item->destination_province_label }}</td>
                             <td>{{ $item->departure_time_label }}</td>
                             <td>{{ \Illuminate\Support\Str::limit($item->support_type_label, 40) }}</td>
+                            <td>{{ $item->student_note }}</td>
+                            <td>{{ $item->is_agreed ? 'Có' : 'Không' }}</td>
                             <td>{{ optional($item->created_at)->format('d/m/Y H:i') }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="10" class="text-center text-muted py-4">Chưa có lượt khảo sát nào.</td>
+                            <td colspan="13" class="text-center text-muted py-4">Chưa có lượt khảo sát nào.</td>
                         </tr>
                     @endforelse
                 </tbody>

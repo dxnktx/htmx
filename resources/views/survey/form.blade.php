@@ -1,6 +1,6 @@
 @extends('layouts.survey')
 
-@section('title', 'Khảo sát nhu cầu về quê ăn Tết')
+@section('title', 'Khảo sát chuyến xe "Hành trình mùa xuân năm 2027"')
 
 @section('content')
 <header class="mb-6 text-center">
@@ -43,6 +43,25 @@
                 placeholder="Nguyễn Văn A"
             >
             @error('full_name')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label for="email" class="mb-2 block text-sm font-semibold text-slate-800">
+                Email <span class="text-red-600">*</span>
+            </label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                value="{{ old('email') }}"
+                required
+                maxlength="255"
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 text-base outline-none ring-red-500 focus:border-red-500 focus:ring-2"
+                placeholder="email@example.com"
+            >
+            @error('email')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
             @enderror
         </div>
@@ -168,7 +187,7 @@
 
         <div>
             <label for="destination_province" class="mb-2 block text-sm font-semibold text-slate-800">
-                Nhu cầu về tỉnh nào <span class="text-red-600">*</span>
+                Nhu cầu về Tỉnh/Thành nào? <span class="text-red-600">*</span>
             </label>
             <select
                 id="destination_province"
@@ -197,44 +216,72 @@
                     <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2.5 has-[:checked]:border-red-400 has-[:checked]:bg-red-50">
                         <input
                             type="radio"
-                            name="departure_time"
+                            name="departure_time_range"
                             value="{{ $value }}"
                             class="h-4 w-4 accent-red-600"
-                            {{ old('departure_time') === $value ? 'checked' : '' }}
+                            {{ old('departure_time_range') === $value ? 'checked' : '' }}
                             required
                         >
                         <span class="text-sm sm:text-base">{{ $label }}</span>
                     </label>
                 @endforeach
             </div>
-            @error('departure_time')
+            <div id="departure_time_other_wrap" class="mt-3 {{ old('departure_time_range') === \App\Models\Survey::DEPARTURE_TIME_OTHER ? '' : 'hidden' }}">
+                <label for="departure_time_other" class="mb-2 block text-sm font-medium text-slate-700">
+                    Ngày khởi hành mong muốn <span class="text-red-600">*</span>
+                </label>
+                <input
+                    type="date"
+                    id="departure_time_other"
+                    name="departure_time_other"
+                    lang="vi-VN"
+                    value="{{ old('departure_time_other') }}"
+                    class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500"
+                >
+                
+            </div>
+            @error('departure_time_range')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+            @error('departure_time_other')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
             @enderror
         </fieldset>
 
-        <fieldset>
-            <legend class="mb-3 text-sm font-semibold text-slate-800">
-                Hình thức hỗ trợ mong muốn <span class="text-red-600">*</span>
-            </legend>
-            <div class="space-y-2">
-                @foreach ($supportTypes as $value => $label)
-                    <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 px-3 py-2.5 has-[:checked]:border-red-400 has-[:checked]:bg-red-50">
-                        <input
-                            type="radio"
-                            name="support_type"
-                            value="{{ $value }}"
-                            class="mt-1 h-4 w-4 accent-red-600"
-                            {{ old('support_type') === $value ? 'checked' : '' }}
-                            required
-                        >
-                        <span class="text-sm sm:text-base">{{ $label }}</span>
-                    </label>
-                @endforeach
-            </div>
-            @error('support_type')
+        <div>
+            <label for="student_note" class="mb-2 block text-sm font-semibold text-slate-800">
+                Mong muốn của sinh viên (nếu có)
+            </label>
+            <textarea
+                id="student_note"
+                name="student_note"
+                rows="4"
+                maxlength="1000"
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500"
+                placeholder="Nhập mong muốn của bạn (nếu có)"
+            >{{ old('student_note') }}</textarea>
+            @error('student_note')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
             @enderror
-        </fieldset>
+        </div>
+
+
+        <div>
+            <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 px-3 py-3 has-[:checked]:border-red-400 has-[:checked]:bg-red-50">
+                <input
+                    type="checkbox"
+                    name="is_agreed"
+                    value="1"
+                    class="mt-1 h-4 w-4 accent-red-600"
+                    @checked(old('is_agreed'))
+                    required
+                >
+                <span class="text-sm sm:text-base">Tôi đồng ý cung cấp thông tin dữ liệu đã khai báo để phục vụ mục đích khảo sát cho chương trình "Hành trình mùa xuân 2027" <span class="text-red-600">*</span></span>
+            </label>
+            @error('is_agreed')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
 
         <fieldset>
             <div class="space-y-2">
@@ -302,6 +349,27 @@
 
         bindUniversityOtherToggle();
         bindOtherToggle('family_situation', 'family_situation_other_wrap');
+
+        const departureOtherWrap = document.getElementById('departure_time_other_wrap');
+        const departureOtherInput = document.getElementById('departure_time_other');
+        const departureRadios = document.querySelectorAll('input[name="departure_time_range"]');
+
+        function syncDepartureOther() {
+            const selected = document.querySelector('input[name="departure_time_range"]:checked');
+            const isOther = selected && selected.value === @json(\App\Models\Survey::DEPARTURE_TIME_OTHER);
+
+            departureOtherWrap.classList.toggle('hidden', !isOther);
+            departureOtherInput.required = Boolean(isOther);
+
+            if (!isOther) {
+                departureOtherInput.value = '';
+            }
+        }
+
+        departureRadios.forEach(function (radio) {
+            radio.addEventListener('change', syncDepartureOther);
+        });
+        syncDepartureOther();
     })();
 </script>
 @endpush

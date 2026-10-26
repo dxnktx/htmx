@@ -16,13 +16,17 @@ class SurveysExportTest extends TestCase
         $export = new SurveysExport(Request::create('/'));
         $survey = new Survey([
             'full_name' => 'Nguyen Van A',
+            'email' => 'student@example.com',
             'university_other' => 'Trường Đại học thử nghiệm',
             'student_year' => 'year_1',
             'current_residence' => 'KTX Khu A',
             'family_situation' => 'poor',
             'destination_province' => 'lam_dong',
             'departure_time' => '2026-01-12_15',
+            'departure_time_other' => null,
             'support_type' => 'bus_seat',
+            'student_note' => 'Mong muốn thử nghiệm',
+            'is_agreed' => true,
         ]);
         $survey->created_at = '2026-01-01 10:30:00';
 
@@ -32,19 +36,26 @@ class SurveysExportTest extends TestCase
         $this->assertSame([
             'STT',
             'Họ và tên',
+            'Email',
             'Đơn vị đào tạo',
             'Sinh viên năm',
             'Chỗ ở hiện tại',
             'Hoàn cảnh gia đình',
             'Tỉnh về quê',
             'Thời gian khởi hành',
+            'Thời gian khởi hành (Khác)',
             'Hình thức hỗ trợ',
+            'Mong muốn của sinh viên',
+            'Đồng ý cung cấp thông tin',
             'Ngày gửi',
         ], $export->headings());
         $this->assertSame(1, $firstRow[0]);
-        $this->assertSame('Trường Đại học thử nghiệm', $firstRow[2]);
-        $this->assertSame('Lâm Đồng (Bình Thuận, Đăk Nông cũ)', $firstRow[6]);
-        $this->assertSame('01/01/2026 10:30', $firstRow[9]);
+        $this->assertSame('student@example.com', $firstRow[2]);
+        $this->assertSame('Trường Đại học thử nghiệm', $firstRow[3]);
+        $this->assertSame('Lâm Đồng', $firstRow[7]);
+        $this->assertSame('Mong muốn thử nghiệm', $firstRow[11]);
+        $this->assertSame('Có', $firstRow[12]);
+        $this->assertSame('01/01/2026 10:30', $firstRow[13]);
         $this->assertSame(2, $secondRow[0]);
     }
 
