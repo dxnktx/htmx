@@ -1,0 +1,11 @@
+app/Http/Controllers/Admin/SurveyAdminController.php
+changed_files2610.txt
+export2610_1/.phpunit.result.cache
+export2610_1/app/Http/Controllers/SurveyController.php
+export2610_1/app/Http/Requests/StoreSurveyRequest.php
+export2610_1/resources/views/admin/surveys/index.blade.php
+export2610_1/resources/views/survey/form.blade.php
+export2610_1/resources/views/survey/success.blade.php
+export2610_1/routes/web.php
+resources/views/admin/surveys/index.blade.php
+routes/web.php

@@ -6,6 +6,7 @@ use App\Exports\SurveysExport;
 use App\Http\Controllers\Controller;
 use App\Models\Survey;
 use App\Models\Unit;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -82,5 +83,14 @@ class SurveyAdminController extends Controller
         $filename = 'khao-sat-ve-que-an-tet-'.now()->format('Ymd_His').'.xlsx';
 
         return Excel::download(new SurveysExport($request), $filename);
+    }
+
+    public function destroy(Request $request, Survey $survey): RedirectResponse
+    {
+        $survey->delete();
+
+        return redirect()
+            ->route('admin.surveys.index', $request->only(['unit_id', 'destination_province', 'q']))
+            ->with('success', 'Đã xóa bản ghi khảo sát.');
     }
 }

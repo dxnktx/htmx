@@ -139,8 +139,8 @@ class Survey extends Model
     public static function departureTimes(): array
     {
         return [
-            '2026-01-12_15' => '12/01 – 15/01/2026',
-            '2026-01-16_21' => '16/01 – 21/01/2026',
+            '2026-01-12_15' => '20/01/2027 – 24/01/2027',
+            '2026-01-16_21' => '25/01/2027 – 28/01/2027',
             self::DEPARTURE_TIME_OTHER => self::DEPARTURE_TIME_OTHER,
         ];
     }

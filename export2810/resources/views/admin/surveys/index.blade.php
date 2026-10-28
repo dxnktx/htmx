@@ -3,6 +3,10 @@
 @section('heading', 'Khảo sát về quê ăn Tết')
 
 @section('main_content')
+@if (session('success'))
+    <div class="alert alert-success" role="alert">{{ session('success') }}</div>
+@endif
+
 <div class="row mb-3">
     <div class="alert alert-primary d-flex align-items-center" role="alert">
         <div>
@@ -136,6 +140,7 @@
                         <th>Ghi chú của sinh viên</th>
                         <th>Trạng thái đồng ý</th>
                         <th>Thời gian gửi</th>
+                        <th>Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -154,10 +159,21 @@
                             <td>{{ $item->student_note }}</td>
                             <td>{{ $item->is_agreed ? 'Có' : 'Không' }}</td>
                             <td>{{ optional($item->created_at)->format('d/m/Y H:i') }}</td>
+                            <td>
+                                <form
+                                    action="{{ route('admin.surveys.destroy', ['survey' => $item->id] + request()->only(['unit_id', 'destination_province', 'q', 'page'])) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Bạn có chắc chắn muốn xóa bản ghi khảo sát này không?')"
+                                >
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Xóa</button>
+                                </form>
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="13" class="text-center text-muted py-4">Chưa có lượt khảo sát nào.</td>
+                            <td colspan="14" class="text-center text-muted py-4">Chưa có lượt khảo sát nào.</td>
                         </tr>
                     @endforelse
                 </tbody>

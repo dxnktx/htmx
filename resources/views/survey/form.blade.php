@@ -7,8 +7,8 @@
     <!--<p class="text-sm font-semibold uppercase tracking-wide text-red-700">Chương trình Hành trình mùa Xuân</p>-->
     <h1 class="mt-2 text-2xl font-bold text-red-800 sm:text-3xl" style="line-height: 1.4;">Khảo sát nhu cầu đăng ký <br/> Chuyến xe "HÀNH TRÌNH MÙA XUÂN"</h1>
 </header>
-<ul class="text-justify">Chương trình Hành trình mùa xuân năm 2027 với ý nghĩa nhằm kịp thời quan tâm, chăm lo, hỗ trợ cho sinh viên có hoàn cảnh khó khăn trong dịp Tết Nguyên đán Bính Ngọ năm 2027. Ban Cán sự Đoàn ĐHQG-HCM và Trung tâm Quản lý Ký túc xá và Khu đô thị ĐHQG-HCM khảo sát sinh viên có nhu cầu, cụ thể như sau:
-    <li><span class="font-bold">- Thời gian khảo sát:</span> 27/10 – 05/11/2026.</li>
+<ul class="text-justify">Chương trình Hành trình mùa xuân năm 2027 với ý nghĩa nhằm kịp thời quan tâm, chăm lo, hỗ trợ cho sinh viên có hoàn cảnh khó khăn trong dịp Tết Nguyên đán Đinh Mùi năm 2027. Ban Cán sự Đoàn ĐHQG-HCM và Trung tâm Quản lý Ký túc xá và Khu đô thị ĐHQG-HCM khảo sát sinh viên có nhu cầu, cụ thể như sau:
+    <li><span class="font-bold">- Thời gian khảo sát:</span> 28/10 – 05/11/2026.</li>
     <li><span class="font-bold">- Đối tượng:</span> Sinh viên nội trú Ký túc xá ĐHQG-HCM và sinh viên đang học tập tại các cơ sở đào tạo thuộc ĐHQG-HCM.</li>
 </ul>
 

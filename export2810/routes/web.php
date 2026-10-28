@@ -13,5 +13,6 @@ Route::get('/khao-sat/da-hoan-thanh', [SurveyController::class, 'alreadySubmitte
 
 Route::middleware(['auth', 'permission:browse-dashboard'])->prefix('admin')->group(function () {
     Route::get('/khao-sat', [SurveyAdminController::class, 'index'])->name('admin.surveys.index');
+    Route::delete('/khao-sat/{survey}', [SurveyAdminController::class, 'destroy'])->name('admin.surveys.destroy');
     Route::get('/khao-sat/export', [SurveyAdminController::class, 'export'])->name('admin.surveys.export');
 });
